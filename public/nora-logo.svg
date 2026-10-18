@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background glow filter -->
+    <filter id="noraGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <filter id="coreGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Gradients matching the neon knot -->
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#c026d3" />
+    </linearGradient>
+
+    <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c026d3" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+
+    <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#67e8f9" />
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <g transform="translate(250, 250)" filter="url(#noraGlow)">
+    <!-- 6 Interlocking Loop Ribbons arranged symmetrically around center -->
+    <!-- Loop 1 (Top / Cyan) -->
+    <path d="M 0 -180 C 70 -180 120 -130 120 -60 C 120 10 70 70 0 70 C -45 70 -80 45 -80 0 C -80 -25 -65 -45 -40 -45 C -15 -45 0 -25 0 0 C 0 35 -30 65 -65 65"
+          fill="none" stroke="url(#grad1)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Loop 2 (60 deg) -->
+    <g transform="rotate(60)">
+      <path d="M 0 -180 C 70 -180 120 -130 120 -60 C 120 10 70 70 0 70 C -45 70 -80 45 -80 0 C -80 -25 -65 -45 -40 -45 C -15 -45 0 -25 0 0 C 0 35 -30 65 -65 65"
+            fill="none" stroke="url(#grad2)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Loop 3 (120 deg) -->
+    <g transform="rotate(120)">
+      <path d="M 0 -180 C 70 -180 120 -130 120 -60 C 120 10 70 70 0 70 C -45 70 -80 45 -80 0 C -80 -25 -65 -45 -40 -45 C -15 -45 0 -25 0 0 C 0 35 -30 65 -65 65"
+            fill="none" stroke="url(#grad3)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Loop 4 (180 deg) -->
+    <g transform="rotate(180)">
+      <path d="M 0 -180 C 70 -180 120 -130 120 -60 C 120 10 70 70 0 70 C -45 70 -80 45 -80 0 C -80 -25 -65 -45 -40 -45 C -15 -45 0 -25 0 0 C 0 35 -30 65 -65 65"
+            fill="none" stroke="url(#grad4)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Loop 5 (240 deg) -->
+    <g transform="rotate(240)">
+      <path d="M 0 -180 C 70 -180 120 -130 120 -60 C 120 10 70 70 0 70 C -45 70 -80 45 -80 0 C -80 -25 -65 -45 -40 -45 C -15 -45 0 -25 0 0 C 0 35 -30 65 -65 65"
+            fill="none" stroke="url(#grad5)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Loop 6 (300 deg) -->
+    <g transform="rotate(300)">
+      <path d="M 0 -180 C 70 -180 120 -130 120 -60 C 120 10 70 70 0 70 C -45 70 -80 45 -80 0 C -80 -25 -65 -45 -40 -45 C -15 -45 0 -25 0 0 C 0 35 -30 65 -65 65"
+            fill="none" stroke="url(#grad6)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <!-- Central Glowing 4-pointed Star -->
+    <g filter="url(#coreGlow)">
+      <path d="M 0 -36 Q 0 0 36 0 Q 0 0 0 36 Q 0 0 -36 0 Q 0 0 0 -36 Z"
+            fill="#a5f3fc" />
+      <path d="M 0 -24 Q 0 0 24 0 Q 0 0 0 24 Q 0 0 -24 0 Q 0 0 0 -24 Z"
+            fill="#ffffff" />
+    </g>
+  </g>
+</svg>
