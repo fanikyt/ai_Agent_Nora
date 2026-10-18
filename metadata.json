@@ -1,0 +1,6 @@
+{
+  "name": "Gemini Code & Agent Studio",
+  "description": "Nora — флагманский интеллектуальный ИИ-клиент и ассистент разработки с поддержкой живого голоса, генерации изображений, библиотеки шаблонов, Live Canvas и PWA-приложения для ПК и телефонов.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // PII protection, no listing users
+      allow create: if isOwner(userId)
+        && request.resource.data.keys().hasAll(['id', 'email', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['id', 'email', 'displayName', 'photoURL', 'createdAt'])
+        && request.resource.data.id == request.auth.uid
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 256;
+      allow update: if isOwner(userId)
+        && request.resource.data.id == resource.data.id
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false;
+    }
+
+    // Chats collection
+    match /chats/{chatId} {
+      allow get: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if isSignedIn()
+        && isValidId(chatId)
+        && request.resource.data.keys().hasAll(['id', 'title', 'ownerId', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['id', 'title', 'ownerId', 'createdAt', 'updatedAt', 'model', 'mode', 'isPinned'])
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 150;
+      allow update: if isSignedIn()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 150;
+      allow delete: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+
+      // Messages sub-collection
+      match /messages/{messageId} {
+        function parentChat() {
+          return get(/databases/$(database)/documents/chats/$(chatId)).data;
+        }
+
+        allow get, list: if isSignedIn() && parentChat().ownerId == request.auth.uid;
+        allow create: if isSignedIn()
+          && isValidId(messageId)
+          && parentChat().ownerId == request.auth.uid
+          && request.resource.data.keys().hasAll(['id', 'chatId', 'role', 'content', 'senderId', 'createdAt'])
+          && request.resource.data.chatId == chatId
+          && request.resource.data.content is string
+          && request.resource.data.content.size() <= 50000;
+        allow update, delete: if false;
+      }
+    }
+  }
+}
